@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Register Page</title>
+</head>
+
+<body>
+    <div class="container" id="container">
+        <!-- //Login Form Page -->
+        <div class="form-container sign-in">
+            <form action="/register" method="post">
+                <h1>Đăng Ký</h1>
+                <input type="text" placeholder="Tài khoản" id="username" name="username" required>
+                <input type="password" placeholder="Mật khẩu" id="password" name="password" required>
+                <select name="phongban">
+                    <option value="">Chọn phòng ban</option>
+                    <% data.forEach(function(db) { %>
+                      <option value="<%= db.IdPB %>">
+                        <%= db.TenPB %>
+                      </option>
+                      <% }); %>
+                  </select>
+                <button class="signin-button" type="submit">Đăng Ký</button>
+                <p class="error"><%= error%></p>
+            </form>
+            <style>
+                .error{
+                    color: red;
+                    font-size: 14px;
+                }
+            </style>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-right">
+                    <p>BIIC</p>
+                    <img class="rounded-image" src="images/biic.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

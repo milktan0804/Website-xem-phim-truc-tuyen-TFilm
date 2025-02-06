@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>QL Nhiệm vụ</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="grid-container">
+    <!-- HEADER -->
+    <%- include('partials/header') %>
+      <!-- Thông báo -->
+      <!-- Sidebar -->
+      <%- include('partials/sidebar') %>
+        <!-- end Sidebar -->
+        <!-- main -->
+        <main class="main-container">
+          <div class="container">
+            <h2>Nhiệm vụ</h2>
+            <div class="container-1">
+              <div class="container-2"> Hiển thị
+                <form id="thongtinnhiemvu" action="/thongtinnhiemvu" method="post">
+                  <select name="phongban">
+                    <option value="">Chọn phòng ban</option>
+                    <% data.forEach(function(db) { %>
+                      <option value="<%= db.IdPB %>">
+                        <%= db.TenPB %>
+                      </option>
+                      <% }); %>
+                  </select>
+                  <select name="trangthai">
+                    <option value="">Chọn trạng thái</option>
+                    <option value="1">Chờ</option>
+                    <option value="2">Đang Xử Lý</option>
+                    <option value="3">Hoàn Thành</option>
+                    <option value="4">Phê Duyệt</option>
+                    <option value="5">Lưu Trữ</option>
+                  </select>
+                  <button type="submit" class="Loc">TÌm kiếm</button>
+                </form>
+              </div>
+              <div>
+
+                <table class="table table-responsive">
+                  <thead>
+                    <tr>
+                      <th scope="col">Tên Nhiệm Vụ</th>
+                      <th scope="col">Thời gian bắt đầu</th>
+                      <th scope="col">Phòng ban</th>
+                      <th scope="col">Thời gian kết thúc</th>
+                      <th scope="col">Trạng thái</th>
+                      <th scope="col">Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if (data1.length> 0) { %>
+                      <% data1.forEach(pb=> { %>
+                        <tr>
+                          <th scope="row">
+                            <%= pb.TenNV %>
+                          </th>
+                          <td>
+                            <%= new Date(pb.NgayBatDauNV).toLocaleDateString('en-GB') %>
+                          </td>
+                          <td>
+                            <%= pb.TenPB %>
+                          </td>
+                          <td>
+                            <%= new Date(pb.NgayKetThucNV).toLocaleDateString('en-GB') %>
+                          </td>
+                          <td>
+                            <% switch (pb.TinhTrangNV) { case 1 : %>
+                              <p class="TrangTH-Cho">Chờ</p>
+                              <% break; case 2 : %>
+                                <p class="TrangTH-XL">Đang Xử Lý</p>
+                                <% break; case 3 : %>
+                                  <p class="TrangTH-HT">Hoàn Thành</p>
+                                  <% break; case 4 : %>
+                                    <p class="TrangTH-PD">Phê Duyệt</p>
+                                    <% break; case 5 : %>
+                                      <p class="TrangTH-LT">Lưu Trữ</p>
+                                      <% break; default: %>
+                                        <p class="TrangTH-Unknown">Trạng thái không xác định</p>
+                                        <% } %>
+                          </td>
+                          <td>
+                            <a class="V" href="hoanthanh.html"><i
+                                class="material-icons material-symbols-outlined">visibility</i></a>
+                            <a class="D" href="default.asp"><i
+                                class="material-icons material-symbols-outlined">delete</i></a>
+                          </td>
+                        </tr>
+                        <% }); %>
+                          <% } else { %>
+                            <tr>
+                              <td colspan="5">Không có nhiệm vụ.</td>
+                            </tr>
+                            <% } %>
+
+                  </tbody>
+                </table>
+              </div>
+              <p style="font-size: 15px;">Tất cả <%= totalPages %> trang</p>
+              <div class="foot-page">
+                <a href="?page=<%= currentPage - 1 %>"><i class="material-icons material-symbols-outlined">
+                    chevron_backward</i></a>
+                <% for (let i=1; i <=totalPages; i++) { %>
+                  <a href="?page=<%= i %>" class="page <%= currentPage === i ? 'active' : '' %>">
+                    <%= i %>
+                  </a>
+                  <% } %>
+                    <a href="?page=<%= currentPage + 1 %>"><i class="material-icons material-symbols-outlined">
+                        chevron_forward</i></a>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- End Main -->
+
+  </div>

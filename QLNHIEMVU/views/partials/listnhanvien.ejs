@@ -1,0 +1,22 @@
+<% if (data.length> 0) { %>
+    <% data.forEach(pb=> { %>
+        <tr>
+            <td>
+                <%= pb.IdNVien %>
+            </td>
+            <td>
+                <%= pb.PhongBan || '' %>
+            </td>
+            <td>
+                <a class="V" href="/edit/<%= pb.IdNVien %>"><i
+                        class="material-icons material-symbols-outlined">edit</i></a>
+                <a class="D" href="/delete/<%= pb.IdNVien %>"><i
+                        class="material-icons material-symbols-outlined">delete</i></a>
+            </td>
+        </tr>
+        <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="3">Không có dữ liệu nhân viên.</td>
+                </tr>
+                <% } %>

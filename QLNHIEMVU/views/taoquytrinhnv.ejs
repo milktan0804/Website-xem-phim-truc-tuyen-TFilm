@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Quy trình NV</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .input-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .create-button,
+        .delete-button {
+            margin-left: 10px;
+        }
+
+        .file-input-container {
+            margin-bottom: 20px;
+        }
+
+        .file-input-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .thumbnail {
+            display: flex;
+            align-items: center;
+            margin: 10px;
+        }
+
+        .thumbnail i {
+            font-size: 48px;
+            margin-right: 10px;
+        }
+
+        .thumbnail span {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-container">
+        <!-- HEADER -->
+        <%- include('partials/header') %>
+            <!-- Thông báo -->
+            <!-- Sidebar -->
+            <%- include('partials/sidebar') %>
+                <!-- end Sidebar -->
+                <!-- main -->
+                <main class="main-container">
+                    <div class="main-title">
+                        <p class="font-weight-bold">QUY TRÌNH NHIỆM VỤ</p>
+                    </div>
+                    <form action="#" method="post" enctype="multipart/form-data">
+                        <div class="file-input-container">
+                            <div class="file-input-title">Chọn file đính kèm:</div>
+                            <input type="file" id="file-input" name="files" multiple>
+                            <div id="preview" style="display: flex; flex-wrap: wrap; gap: 10px;"></div>
+                        </div>
+                        <div class="input-container">
+                            <div class="file-input-title">Tên quy trình:</div>
+                            <input type="text" id="tenqtnv" name="tenqtnv" placeholder="Nhập tên quy trình nhiệm vụ,..."
+                                required>
+                        </div>
+                        <div id="inputContainer" class="input-container">
+                            <div class="input-group" id="group1">
+                                <div class="input-title">Bước 1</div>
+                                <div class="input-row">
+                                    <input type="text" id="input1" placeholder="Nhập nội dung">
+                                    <button class="Loc" onclick="createNextInput(event,1)">Tạo</button>
+                                    <button class="Xoa" onclick="deleteInput(event, 1)">Xóa</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-2">
+                            <button type="submit" class="xacnhan">Xác nhận quy trình</button>
+                        </div>
+                    </form>
+                </main>
+                <!-- End Main -->
+    </div>
+    <script>
+        let inputCount = 1;
+
+        function createNextInput(event, currentIndex) {
+            event.preventDefault();
+            const currentInput = document.getElementById(`input${currentIndex}`);
+            if (currentInput.value.trim() === '') {
+                alert('Vui lòng nhập nội dung trước khi tạo input mới.');
+                return;
+            }
+
+            inputCount++;
+            const inputContainer = document.getElementById('inputContainer');
+            const newInputGroup = document.createElement('div');
+            newInputGroup.className = 'input-group';
+            newInputGroup.id = `group${inputCount}`;
+            newInputGroup.innerHTML = `
+                <div class="input-title">Bước ${inputCount}</div>
+                <div class="input-row">
+                    <input type="text" id="input${inputCount}" placeholder="Nhập nội dung">
+                    <button class="Loc" onclick="createNextInput(event, ${inputCount})">Tạo</button>
+                    <button class="Xoa" onclick="deleteInput(event, ${inputCount})">Xóa</button>
+                </div>
+            `;
+            inputContainer.appendChild(newInputGroup);
+        }
+
+        function deleteInput(event, currentIndex) {
+            event.preventDefault();
+            const inputGroup = document.getElementById(`group${currentIndex}`);
+            if (inputGroup) {
+                inputGroup.remove();
+
+                // Giảm inputCount nếu nhóm input bị xóa là nhóm cuối cùng
+                if (currentIndex === inputCount) {
+                    inputCount--;
+                }
+            }
+        }
+    </script>
+    <script>
+        // Function to preview selected files
+        document.getElementById('file-input').addEventListener('change', function (event) {
+            var preview = document.getElementById('preview');
+            preview.innerHTML = ''; // Clear previous previews
+
+            Array.from(event.target.files).forEach(file => {
+                var thumbnail = document.createElement('div');
+                thumbnail.className = 'thumbnail';
+
+                var icon = document.createElement('i');
+                icon.className = 'material-icons';
+
+                // Set icon based on file type
+                if (file.type.startsWith('image/')) {
+                    icon.textContent = 'image';
+                } else if (file.type.startsWith('video/')) {
+                    icon.textContent = 'video_file';
+                } else if (file.type.startsWith('audio/')) {
+                    icon.textContent = 'audio_file';
+                } else {
+                    icon.textContent = 'insert_drive_file';
+                }
+                var fileName = document.createElement('span');
+                fileName.textContent = file.name;
+
+                thumbnail.appendChild(icon);
+                thumbnail.appendChild(fileName);
+                preview.appendChild(thumbnail);
+            });
+        });
+    </script>
+</body>
+
+</html>

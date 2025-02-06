@@ -1,0 +1,81 @@
+<aside id="sidebar">
+    <div class="sidebar-title">
+        <div class="sidebar-brand">
+            <span class="material-icons-outlined"></span> BIIC
+        </div>
+        <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+    </div>
+
+
+    <ul class="sidebar-list">
+        <li class="sidebar-list-item" id="sb-baocao">
+            <a href="#" onclick="baocao()">
+                <span class="material-icons-outlined">dashboard</span> Báo cáo
+                <script>function baocao() { window.location.href = "/index"; }</script>
+            </a>
+        </li>
+
+
+        <li class="sidebar-list-item">
+            <a href="#" target="_blank" onclick="qlnv()">
+                <span class="material-icons-outlined">inventory_2</span> Nhiệm vụ
+                <script>function qlnv() { window.location.href = "/qlnhiemvu"; }</script>
+            </a>
+        </li>
+        <li class="sidebar-list-item" id="sb-nhanvien">
+            <a href="#" target="_blank" onclick="qlnvien()">
+                <span class="material-icons-outlined">people</span> Nhân viên
+                <script>function qlnvien() { window.location.href = "/qlnhanvien"; }</script>
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#" target="_blank" onclick="qlpb()">
+                <span class="material-icons-outlined">fact_check</span> Phòng ban
+                <script>function qlpb() { window.location.href = "/qlphongban"; }</script>
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#" target="_blank" onclick="quytrinhnv()">
+                <span class="material-icons-outlined">bookmark</span>Quy trình nhiệm vụ
+                <script>function quytrinhnv() { window.location.href = "/quytrinhnv"; }</script>
+            </a>
+        </li>
+        <li class="sidebar-list-item">
+            <a href="#" target="_blank">
+                <span class="material-icons-outlined">settings</span> Công tác đảng
+            </a>
+            <div class="submenu">
+                <a href="#">
+
+                    <button id="qtkndang">Quy trình kết nạp đảng viên</button>
+
+                    <script>
+                        document.getElementById("qtkndang").addEventListener("click", function () {
+                            window.location.href = "/qtkndang";
+                        });
+                    </script>
+                </a>
+                <a href="#">
+
+                    <button id="qtcd">Quy trình chuyển đảng chính thức</button>
+
+                    <script>
+                        document.getElementById("qtcd").addEventListener("click", function () {
+                            window.location.href = "qtcd.html";
+                        });
+                    </script>
+                </a>
+                <a href="#">
+
+                    <button id="qtcshoatdong">Quy trình chuyển sinh hoạt đảng</button>
+
+                    <script>
+                        document.getElementById("qtcshoatdong").addEventListener("click", function () {
+                            window.location.href = "qtcshoatdong.html";
+                        });
+                    </script>
+                </a>
+        </li>
+    </ul>
+</aside>
+<!-- End Sidebar -->

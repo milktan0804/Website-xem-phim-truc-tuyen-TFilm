@@ -1,0 +1,11 @@
+<div id="notifications" class="notification hidden">
+    <% if (thongbao && thongbao.length) { %>
+      <% thongbao.forEach(thongbao=> { %>
+        <div class="notification-item">
+          <%= thongbao.NoiDung %>
+        </div>
+        <% }) %>
+          <% } else { %>
+            <div class="notification-item">Không có thông báo nào.</div>
+            <% } %>
+  </div>

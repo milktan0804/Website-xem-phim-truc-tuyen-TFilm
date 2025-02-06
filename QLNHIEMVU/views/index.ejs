@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Phần mềm QLNV</title>
+  <!-- Montserrat Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+  <div class="grid-container">
+    <!-- HEADER -->
+    <%- include('partials/header') %>
+      <!-- Thông báo -->
+      <%- include('partials/notification',{ thongbao }) %>
+        <!-- Sidebar -->
+        <%- include('partials/sidebar') %>
+          <!-- Main -->
+          <main class="main-container">
+            <div class="main-title">
+              <p class="font-weight-bold">TỔNG QUÁT</p>
+            </div>
+            <div class="container">
+
+              <p>Bảng Điều khiển - <a href="default.asp">Báo cáo </a> - <a href="default.asp"></a> </p>
+              <button id="create-task-button" class="custom-button" onclick="btntaonv()"> + Tạo nhiệm vụ</button>
+              <script>function btntaonv() { window.location.href = "/create-task" }</script>
+            </div>
+            <style>
+              .custom-button {
+                background-color: #1890FF;
+                width: 172px;
+                height: 60px;
+                border: none;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+
+                font-size: 16px;
+                cursor: pointer;
+                border-radius: 9px;
+              }
+
+              .custom-button-container {
+                position: absolute;
+                top: 20%;
+                right: 100%;
+                transform: translateY(-50%);
+              }
+
+              .element {
+                transform: translateY(-30%) scale(1, 0.6);
+              }
+            </style>
+
+            </head>
+
+
+            <body>
+
+
+              <div class="main-cards">
+
+                <div class="card">
+                  <div class="card-inner">
+                    <p class="text-primary">Tổng số nhiệm vụ</p>
+                    <span class="material-icons-outlined text-blue">inventory_2</span>
+                  </div>
+                  <span class="text-primary font-weight-bold">
+                    <%= nhiemvu[0] %>
+                  </span>
+                </div>
+
+                <div class="card">
+                  <div class="card-inner">
+                    <p class="text-primary">Đang xử lý</p>
+                    <span class="material-icons-outlined text-red">notification_important</span>
+                  </div>
+                  <span class="text-primary font-weight-bold">
+                    <%= nhiemvu[1] %>
+                  </span>
+                </div>
+
+                <div class="card">
+                  <div class="card-inner">
+                    <p class="text-primary">Đã hoàn thành</p>
+                    <span class="material-icons-outlined text-orange">add_shopping_cart</span>
+                  </div>
+                  <span class="text-primary font-weight-bold">
+                    <%= nhiemvu[2] %>
+                  </span>
+                </div>
+
+                <div class="card">
+                  <div class="card-inner">
+                    <p class="text-primary">Đã phê duyệt</p>
+                    <span class="material-icons-outlined text-green">shopping_cart</span>
+                  </div>
+                  <span class="text-primary font-weight-bold">
+                    <%= nhiemvu[3] %>
+                  </span>
+                </div>
+
+              </div>
+
+              <div class="charts">
+
+                <div class="charts-card">
+                  <p class="chart-title">Top nhân viên</p>
+                  <div id="bar-chart"></div>
+                </div>
+
+                <div class="charts-card">
+                  <p class="chart-title">Số nhiệm vụ hoàn thành của các Phòng</p>
+                  <div id="area-chart"></div>
+                </div>
+
+              </div>
+          </main>
+          <!-- End Main -->
+
+  </div>
+
+
+  <!-- Scripts -->
+  <!-- ApexCharts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
+  <!-- Custom JS -->
+  <script src="js/scripts.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    function toggleDropdown() {
+      document.getElementById("dropdown-menu").classList.toggle("show");
+    }
+
+    window.onclick = function (event) {
+      if (!event.target.matches('.material-icons-outlined')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+    function toggleDropdown() {
+      document.getElementById("dropdown-menu").classList.toggle("show");
+    }
+
+    window.onclick = function (event) {
+      if (!event.target.matches('.material-icons-outlined')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
+    function openChangePasswordForm() {
+      document.getElementById("changePasswordModal").classList.remove('hidden');
+    }
+
+    function closeChangePasswordForm() {
+      document.getElementById("changePasswordModal").classList.add('hidden');
+    }
+    </script>
+    <script>
+    document.getElementById('changePasswordForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+      const data = {
+        expassword: formData.get('expassword'),
+        password: formData.get('password'),
+        password2: formData.get('password2')
+      };
+
+      try {
+        const response = await fetch('/updatepassword', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Thành công',
+            text: 'Mật khẩu đã được cập nhật thành công.',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            window.location.href = '/';
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Lỗi',
+            text: result.message || 'Đã xảy ra lỗi, vui lòng thử lại sau.',
+            confirmButtonText: 'OK'
+          });
+        }
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Lỗi',
+          text: 'Đã xảy ra lỗi trong quá trình xử lý, vui lòng thử lại sau.',
+          confirmButtonText: 'OK'
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

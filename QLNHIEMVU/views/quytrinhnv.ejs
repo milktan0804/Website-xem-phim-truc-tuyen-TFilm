@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Quy trinhg NV</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .input-container input {
+      display: none;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="grid-container">
+    <!-- HEADER -->
+    <%- include('partials/header') %>
+      <!-- Thông báo -->
+      <!-- Sidebar -->
+      <%- include('partials/sidebar') %>
+        <!-- end Sidebar -->
+        <!-- main -->
+        <main class="main-container">
+          <div class="container">
+            <h2>Quy Trình Nhiệm Vụ</h2>
+            <div class="container-1">
+              <div class="container-2">
+                <button class="Loc" onclick="taoquytrinhnv()">Thêm quy trình</button>
+                <script> function taoquytrinhnv() { window.location.href = "/taoqtnv" }</script>
+              </div>
+            <div>
+
+              <table class="table table-responsive">
+                <thead>
+                  <tr>
+                    <th scope="col">Tên Quy Trình Nhiệm Vụ</th>
+                    <th scope="col">Hành động</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"> NV 1</th>
+                    <td><a class="V" href="hoanthanh.html"><i
+                          class="material-icons material-symbols-outlined ">visibility</i></a> <a class="D"
+                        href="default.asp"><i class="material-icons material-symbols-outlined">delete</i></a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- <p style="font-size: 15px;">Tất cả 5 trang</p> -->
+            <div class="foot-page">
+              <a href="default.asp"><i class="material-icons material-symbols-outlined">
+                  chevron_backward</i></a>
+              <button class="page active">1</button>
+              <button class="page active">2</button>
+              <button class="page active">3</button>
+              <button class="page active">4</button>
+              <button class="page active">5</button>
+              <a href="default.asp"><i class="material-icons material-symbols-outlined">
+                  chevron_forward</i></a>
+            </div>
+          </div>
+  </div>
+  </main>
+  <!-- End Main -->
+  </div>
+  <script>
+    document.getElementById('startButton').addEventListener('click', function () {
+      showInput(1);
+    });
+
+    function showInput(index) {
+      const input = document.getElementById(`nv${index}`);
+      if (input) {
+        input.style.display = 'block';
+        input.addEventListener('input', function () {
+          const nextIndex = index + 1;
+          if (input.value.trim() !== '') {
+            showInput(nextIndex);
+          }
+        });
+      }
+    }
+  </script>
+
+</body>
+
+</html>
